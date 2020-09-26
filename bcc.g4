@@ -1,49 +1,50 @@
 grammar bcc;
+
 prog : fn_decl_list main_prog;
-var_decl : ID ':' DATATYPE (',' ID ':' DATATYPE)*;
-fn_decl_list : ( FUNCTION FID ':' DATATYPE '(' var_decl? ')' stmt_block )*;
-stmt_block : '{' stmt+ '}'
+var_decl : ID TK_DOSPUNTOS DATATYPE (TK_COMA ID TK_DOSPUNTOS DATATYPE)*;
+fn_decl_list : ( FUNCTION FID TK_DOSPUNTOS DATATYPE TK_PAR_IZQ var_decl? TK_PAR_DER TK_COR_IZQ lexpr TK_COR_DER VAR var_decl TK_PUNTOYCOMA stmt_block )*;
+stmt_block : TK_LLAVE_IZQ stmt+ TK_LLAVE_DER
     | stmt;
-stmt : PRINT lexpr ';'
-    | INPUT ID ';'
-    | WHEN '(' lexpr ')' DO stmt_block
-    | IF '(' lexpr ')' DO stmt_block ELSE stmt_block
-    | UNLESS '(' lexpr ')' DO stmt_block
-    | WHILE '(' lexpr ')' DO stmt_block
-    | RETURN lexpr ';'
-    | UNTIL '(' lexpr ')' DO stmt_block
+stmt : PRINT lexpr TK_PUNTOYCOMA
+    | INPUT ID TK_PUNTOYCOMA
+    | WHEN TK_PAR_IZQ lexpr TK_PAR_DER DO stmt_block
+    | IF TK_PAR_IZQ lexpr TK_PAR_DER DO stmt_block ELSE stmt_block
+    | UNLESS TK_PAR_IZQ lexpr TK_PAR_DER DO stmt_block
+    | WHILE TK_PAR_IZQ lexpr TK_PAR_DER DO stmt_block
+    | RETURN lexpr TK_PUNTOYCOMA
+    | UNTIL TK_PAR_IZQ lexpr TK_PAR_DER DO stmt_block
     | LOOP stmt_block
-    | DO stmt_block WHILE '(' lexpr ')'
-    | DO stmt_block UNTIL '(' lexpr ')'
-    | REPEAT NUM ':' stmt_block
-    | FOR '(' lexpr ';' lexpr ';' lexpr ')' DO stmt_block
-    | END ';'
-    | NEXT ';'
-    | BREAK ';'
-    | ID ':=' lexpr ';'
-    | ID '+=' lexpr ';'
-    | ID '-=' lexpr ';'
-    | ID '*=' lexpr ';'
-    | ID '/=' lexpr ';'
-    | ID '%=' lexpr ';'
-    | ID '++' ';'
-    | ID '--' ';'
-    | '--' ID ';'
-    | '++' ID ';';
+    | DO stmt_block WHILE TK_PAR_IZQ lexpr TK_PAR_DER
+    | DO stmt_block UNTIL TK_PAR_IZQ lexpr TK_PAR_DER
+    | REPEAT NUM TK_DOSPUNTOS stmt_block
+    | FOR TK_PAR_IZQ lexpr TK_PUNTOYCOMA lexpr TK_PUNTOYCOMA lexpr TK_PAR_DER DO stmt_block
+    | END TK_PUNTOYCOMA
+    | NEXT TK_PUNTOYCOMA
+    | BREAK TK_PUNTOYCOMA
+    | ID TK_ASIGNACION lexpr TK_PUNTOYCOMA
+    | ID TK_SUMAASIGNACION lexpr TK_PUNTOYCOMA
+    | ID TK_SUBASIGNACION lexpr TK_PUNTOYCOMA
+    | ID TK_PRODASIGNACION lexpr TK_PUNTOYCOMA
+    | ID TK_DIVASIGNACION lexpr TK_PUNTOYCOMA
+    | ID TK_MOD_ASIG lexpr TK_PUNTOYCOMA
+    | ID TK_INCREMENTO TK_PUNTOYCOMA
+    | ID TK_DECREMENTO TK_PUNTOYCOMA
+    | TK_DECREMENTO ID TK_PUNTOYCOMA
+    | TK_INCREMENTO ID TK_PUNTOYCOMA;
 lexpr : nexpr ((AND nexpr)* | (OR nexpr)*);
-nexpr : NOT '(' lexpr ')'
+nexpr : NOT TK_PAR_IZQ lexpr TK_PAR_DER
     | rexpr;
-rexpr : simple_expr ('<'|'=='|'<='|'>'|'>='|'!=') simple_expr;
-simple_expr : term (('+'|'-') term)*;
-term : factor (('*'|'/'|'%') factor)*;
+rexpr : simple_expr (TK_MENOR|TK_IGUALDAD|TK_MENORIGUAL|TK_MAYOR|TK_MAYORIGUAL|TK_DIFERENTE) simple_expr;
+simple_expr : term ((TK_MAS|TK_MENOS) term)*;
+term : factor ((TK_PRODUCTO|TK_DIVISION|TK_MODULO) factor)*;
 factor : NUM
-    | BOOL
-    | ID ('++'| '--')
-    | ('++'|'--') ID
+    | TRUE | FALSE
+    | ID (TK_INCREMENTO| TK_DECREMENTO)
+    | (TK_INCREMENTO|TK_DECREMENTO) ID
     | ID
-    | '(' lexpr ')'
-    | FID '(' (lexpr (',' lexpr)*) ')';
-main_prog : (VAR var_decl ';') stmt* END;
+    | TK_PAR_IZQ lexpr TK_PAR_DER
+    | FID TK_PAR_IZQ (lexpr (TK_COMA lexpr)*) TK_PAR_DER;
+main_prog : (VAR var_decl TK_PUNTOYCOMA) stmt* END;
 
 FUNCTION : 'function';
 FID : '@' ID;
@@ -69,6 +70,40 @@ AND : 'and';
 OR : 'or';
 NOT : 'not';
 
-BOOL : ('true' | 'false');
-ID : [a-z];
+TK_MOD_ASIG : '%=';
+TK_MENORIGUAL : '<=';
+TK_MAYORIGUAL : '>=';
+TK_SUMAASIGNACION : '+=';
+TK_SUBASIGNACION : '-=';
+TK_PRODASIGNACION : '*=';
+TK_DIVASIGNACION : '/=';
+TK_INCREMENTO : '++';
+TK_DECREMENTO : '--';
+TK_IGUALDAD : '==';
+TK_DIFERENTE : '!=';
+TK_ASIGNACION : ':=';
+TK_DOSPUNTOS : ':';
+TK_COMA : ',';
+TK_PUNTOYCOMA : ';';
+TK_PAR_IZQ : '(';
+TK_PAR_DER : ')';
+TK_COR_IZQ : '[';
+TK_COR_DER : ']';
+TK_LLAVE_IZQ : '{';
+TK_LLAVE_DER : '}';
+TK_MENOR : '<';
+TK_MAYOR : '>';
+TK_MAS : '+';
+TK_MENOS : '-';
+TK_PRODUCTO : '*';
+TK_DIVISION : '/';
+TK_MODULO : '%';
+
+TRUE : 'true';
+FALSE : 'false';
+ID : [a-z]+;
+TK_NUM : [0-9]+;
 DATATYPE : ('num');
+COMMENT : '#' ~[\r\n\f]* -> skip;
+WS : [ \t\n\r] -> skip;
+
