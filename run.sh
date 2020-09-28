@@ -1,0 +1,1 @@
+java -jar antlr-4.8-complete.jar -Dlanguage=Python3 -o gen bcc.g4
