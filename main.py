@@ -2,6 +2,7 @@ import sys
 import antlr4
 from gen.bccLexer import bccLexer
 from antlr4.InputStream import InputStream
+from gen.bccParser import bccParser
 
 
 def process_token(token, terminals):
@@ -20,9 +21,17 @@ class GrammarErrorHandler:
     def __init__(self):
         super().__init__()
 
-    def syntaxError(self, *args):
-        print(">>> Error léxico(línea:{},posición:{})".format(args[2], args[3] + 1))
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        print(">>> Error léxico(línea:{},posición:{})".format(line, column + 1))
+        #print("<{},{}> Error sintactico: se encontro: '{}'; se esperaba: '{}'.".format(line, column, offendingSymbol.text))
         exit(0)
+
+    def reportAttemptingFullContext(self, recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs):
+        pass
+
+    def reportAmbiguity(self, recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs):
+        pass
+
 
 
 def main(argv):
@@ -36,19 +45,12 @@ def main(argv):
         input_stream = InputStream(sys.stdin.read())
 
     lexer = bccLexer(input_stream)
-    grammar_error_handler = GrammarErrorHandler()
-    lexer.removeErrorListeners()
-    lexer.addErrorListener(grammar_error_handler)
-
-    token = lexer.nextToken()
-    is_eof = token.text == "<EOF>"
-
-    terminals = list(map(lambda x: x.lower(), lexer.symbolicNames))
-    while not is_eof:
-        process_token(token, terminals)
-        token = lexer.nextToken()
-
-        is_eof = token.text == "<EOF>"
+    s_error = GrammarErrorHandler()
+    token_stream = antlr4.CommonTokenStream(lexer)
+    parser = bccParser(token_stream)
+    #parser.removeErrorListeners()
+    parser.addErrorListener(s_error)
+    parser.prog()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,6 @@
-# Ejemplo con tabulación
-
-    tabulacion previa y posterior
-  print(1)
+## función retornay(x, y)
+function @retornay: (x:num, y:num)
+  {
+  return y;
+  }
+end
