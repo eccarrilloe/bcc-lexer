@@ -4,7 +4,9 @@ prog: fn_decl_list main_prog;
 var_decl:
 	ID TK_DOSPUNTOS DATATYPE (TK_COMA ID TK_DOSPUNTOS DATATYPE)*;
 fn_decl_list: (
-		TK_FUNCTION FID TK_DOSPUNTOS DATATYPE TK_PAR_IZQ (var_decl)? TK_PAR_DER (VAR var_decl TK_PUNTOYCOMA)? stmt_block
+		TK_FUNCTION FID TK_DOSPUNTOS DATATYPE TK_PAR_IZQ (
+			var_decl
+		)? TK_PAR_DER (VAR var_decl TK_PUNTOYCOMA)? stmt_block
 	)*;
 stmt_block: TK_LLAVE_IZQ stmt+ TK_LLAVE_DER | stmt;
 stmt:
@@ -36,18 +38,20 @@ stmt:
 lexpr: nexpr ((TK_AND nexpr)* | (TK_OR nexpr)*);
 nexpr: TK_NOT TK_PAR_IZQ lexpr TK_PAR_DER | rexpr;
 rexpr:
-	simple_expr ((
-		TK_MENOR
-		| TK_IGUALDAD
-		| TK_MENOR_IGUAL
-		| TK_MAYOR
-		| TK_MAYOR_IGUAL
-		| TK_DIFERENTE
-	) simple_expr)?;
+	simple_expr (
+		(
+			TK_MENOR
+			| TK_IGUALDAD
+			| TK_MENOR_IGUAL
+			| TK_MAYOR
+			| TK_MAYOR_IGUAL
+			| TK_DIFERENTE
+		) simple_expr
+	)?;
 simple_expr: term ((TK_MAS | TK_MENOS) term)*;
 term: factor ((TK_MUL | TK_DIV | TK_MOD) factor)*;
 factor:
-	TK_REAL
+	TK_NUM
 	| TRUE
 	| FALSE
 	| ID (TK_INCREMENTO | TK_DECREMENTO)
@@ -113,8 +117,7 @@ DATATYPE: ('num' | 'bool');
 TRUE: 'true';
 FALSE: 'false';
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
-TK_NUM : [0-9]+;
-TK_REAL: '-'? [0-9]+ ('.' [0-9]+)?;
+TK_NUM: [0-9]+;
 COMMENT: '#' ~[\r\n\f]* -> skip;
 WS: [ \t\n\r] -> skip;
 

@@ -1,4 +1,4 @@
-# Generated from /home/joan/PycharmProjects/bcc-lexer/bcc.g4 by ANTLR 4.8
+# Generated from bcc.g4 by ANTLR 4.8
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -11,7 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3<")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3;")
         buf.write("\u0122\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\3\2")
         buf.write("\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3%\n\3\f\3\16\3")
@@ -117,7 +117,7 @@ def serializedATN():
         buf.write("\u00f3\5\26\f\2\u00ef\u00f0\t\4\2\2\u00f0\u00f2\5\26\f")
         buf.write("\2\u00f1\u00ef\3\2\2\2\u00f2\u00f5\3\2\2\2\u00f3\u00f1")
         buf.write("\3\2\2\2\u00f3\u00f4\3\2\2\2\u00f4\25\3\2\2\2\u00f5\u00f3")
-        buf.write("\3\2\2\2\u00f6\u010f\7:\2\2\u00f7\u010f\7\66\2\2\u00f8")
+        buf.write("\3\2\2\2\u00f6\u010f\79\2\2\u00f7\u010f\7\66\2\2\u00f8")
         buf.write("\u010f\7\67\2\2\u00f9\u00fa\78\2\2\u00fa\u010f\t\5\2\2")
         buf.write("\u00fb\u00fc\t\5\2\2\u00fc\u010f\78\2\2\u00fd\u010f\7")
         buf.write("8\2\2\u00fe\u00ff\7(\2\2\u00ff\u0100\5\f\7\2\u0100\u0101")
@@ -173,8 +173,7 @@ class bccParser ( Parser ):
                       "TK_PAR_DER", "TK_COR_IZQ", "TK_COR_DER", "TK_LLAVE_IZQ", 
                       "TK_LLAVE_DER", "TK_MENOR", "TK_MAYOR", "TK_MAS", 
                       "TK_MENOS", "TK_MUL", "TK_DIV", "TK_MOD", "DATATYPE", 
-                      "TRUE", "FALSE", "ID", "TK_NUM", "TK_REAL", "COMMENT", 
-                      "WS" ]
+                      "TRUE", "FALSE", "ID", "TK_NUM", "COMMENT", "WS" ]
 
     RULE_prog = 0
     RULE_var_decl = 1
@@ -249,9 +248,8 @@ class bccParser ( Parser ):
     FALSE=53
     ID=54
     TK_NUM=55
-    TK_REAL=56
-    COMMENT=57
-    WS=58
+    COMMENT=56
+    WS=57
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -286,12 +284,6 @@ class bccParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitProg" ):
                 listener.exitProg(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitProg" ):
-                return visitor.visitProg(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -355,12 +347,6 @@ class bccParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitVar_decl" ):
                 listener.exitVar_decl(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVar_decl" ):
-                return visitor.visitVar_decl(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -482,12 +468,6 @@ class bccParser ( Parser ):
             if hasattr( listener, "exitFn_decl_list" ):
                 listener.exitFn_decl_list(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFn_decl_list" ):
-                return visitor.visitFn_decl_list(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -578,12 +558,6 @@ class bccParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStmt_block" ):
                 listener.exitStmt_block(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStmt_block" ):
-                return visitor.visitStmt_block(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -753,12 +727,6 @@ class bccParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStmt" ):
                 listener.exitStmt(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStmt" ):
-                return visitor.visitStmt(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1135,12 +1103,6 @@ class bccParser ( Parser ):
             if hasattr( listener, "exitLexpr" ):
                 listener.exitLexpr(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLexpr" ):
-                return visitor.visitLexpr(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1230,12 +1192,6 @@ class bccParser ( Parser ):
             if hasattr( listener, "exitNexpr" ):
                 listener.exitNexpr(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNexpr" ):
-                return visitor.visitNexpr(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1258,7 +1214,7 @@ class bccParser ( Parser ):
                 self.state = 218
                 self.match(bccParser.TK_PAR_DER)
                 pass
-            elif token in [bccParser.FID, bccParser.TK_INCREMENTO, bccParser.TK_DECREMENTO, bccParser.TK_PAR_IZQ, bccParser.TRUE, bccParser.FALSE, bccParser.ID, bccParser.TK_REAL]:
+            elif token in [bccParser.FID, bccParser.TK_INCREMENTO, bccParser.TK_DECREMENTO, bccParser.TK_PAR_IZQ, bccParser.TRUE, bccParser.FALSE, bccParser.ID, bccParser.TK_NUM]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 220
                 self.rexpr()
@@ -1316,12 +1272,6 @@ class bccParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitRexpr" ):
                 listener.exitRexpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRexpr" ):
-                return visitor.visitRexpr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1394,12 +1344,6 @@ class bccParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSimple_expr" ):
                 listener.exitSimple_expr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSimple_expr" ):
-                return visitor.visitSimple_expr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1481,12 +1425,6 @@ class bccParser ( Parser ):
             if hasattr( listener, "exitTerm" ):
                 listener.exitTerm(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTerm" ):
-                return visitor.visitTerm(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1531,8 +1469,8 @@ class bccParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def TK_REAL(self):
-            return self.getToken(bccParser.TK_REAL, 0)
+        def TK_NUM(self):
+            return self.getToken(bccParser.TK_NUM, 0)
 
         def TRUE(self):
             return self.getToken(bccParser.TRUE, 0)
@@ -1582,12 +1520,6 @@ class bccParser ( Parser ):
             if hasattr( listener, "exitFactor" ):
                 listener.exitFactor(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFactor" ):
-                return visitor.visitFactor(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1603,7 +1535,7 @@ class bccParser ( Parser ):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 244
-                self.match(bccParser.TK_REAL)
+                self.match(bccParser.TK_NUM)
                 pass
 
             elif la_ == 2:
@@ -1741,12 +1673,6 @@ class bccParser ( Parser ):
             if hasattr( listener, "exitMain_prog" ):
                 listener.exitMain_prog(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMain_prog" ):
-                return visitor.visitMain_prog(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1790,9 +1716,6 @@ class bccParser ( Parser ):
         finally:
             self.exitRule()
         return localctx
-
-    def getErrorMessage(self, e, token_names):
-        print("estoy aquí")
 
 
 
