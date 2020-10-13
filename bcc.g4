@@ -2,9 +2,9 @@ grammar bcc;
 
 prog: fn_decl_list main_prog;
 var_decl:
-	ID TK_DOSPUNTOS DATATYPE (TK_COMA ID TK_DOSPUNTOS DATATYPE)*;
+	ID TK_DOSPUNTOS datatype (TK_COMA ID TK_DOSPUNTOS datatype)*;
 fn_decl_list: (
-		TK_FUNCTION FID TK_DOSPUNTOS DATATYPE TK_PAR_IZQ (
+		TK_FUNCTION FID TK_DOSPUNTOS datatype TK_PAR_IZQ (
 			var_decl
 		)? TK_PAR_DER (VAR var_decl TK_PUNTOYCOMA)? stmt_block
 	)*;
@@ -61,6 +61,8 @@ factor:
 	| FID TK_PAR_IZQ (lexpr (TK_COMA lexpr)*) TK_PAR_DER;
 main_prog: (VAR var_decl TK_PUNTOYCOMA)* stmt* TK_END;
 
+datatype: BOOL | NUM;
+
 TK_FUNCTION: 'function';
 FID: '@' ID;
 VAR: 'var';
@@ -83,6 +85,10 @@ TK_BREAK: 'break';
 TK_AND: 'and';
 TK_OR: 'or';
 TK_NOT: 'not';
+NUM: 'num';
+BOOL: 'bool';
+TRUE: 'true';
+FALSE: 'false';
 
 TK_MOD_ASIG: '%=';
 TK_MENOR_IGUAL: '<=';
@@ -113,9 +119,6 @@ TK_MUL: '*';
 TK_DIV: '/';
 TK_MOD: '%';
 
-DATATYPE: ('num' | 'bool');
-TRUE: 'true';
-FALSE: 'false';
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
 TK_NUM: [0-9]+;
 COMMENT: '#' ~[\r\n\f]* -> skip;

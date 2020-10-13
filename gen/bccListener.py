@@ -116,5 +116,14 @@ class bccListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by bccParser#datatype.
+    def enterDatatype(self, ctx:bccParser.DatatypeContext):
+        pass
+
+    # Exit a parse tree produced by bccParser#datatype.
+    def exitDatatype(self, ctx:bccParser.DatatypeContext):
+        pass
+
+
 
 del bccParser
