@@ -28,6 +28,9 @@ def main(argv):
 
     parser.prog()
 
+    if not parser._errHandler.inErrorRecoveryMode(parser):
+        print("El analisis sintactico ha finalizado correctamente.")
+
 
 if __name__ == "__main__":
     main(sys.argv)

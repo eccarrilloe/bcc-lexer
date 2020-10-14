@@ -107,21 +107,21 @@ class bccListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by bccParser#main_prog.
-    def enterMain_prog(self, ctx:bccParser.Main_progContext):
-        pass
-
-    # Exit a parse tree produced by bccParser#main_prog.
-    def exitMain_prog(self, ctx:bccParser.Main_progContext):
-        pass
-
-
     # Enter a parse tree produced by bccParser#datatype.
     def enterDatatype(self, ctx:bccParser.DatatypeContext):
         pass
 
     # Exit a parse tree produced by bccParser#datatype.
     def exitDatatype(self, ctx:bccParser.DatatypeContext):
+        pass
+
+
+    # Enter a parse tree produced by bccParser#main_prog.
+    def enterMain_prog(self, ctx:bccParser.Main_progContext):
+        pass
+
+    # Exit a parse tree produced by bccParser#main_prog.
+    def exitMain_prog(self, ctx:bccParser.Main_progContext):
         pass
 
 

@@ -19,16 +19,28 @@ class BCCErrorStrategy(DefaultErrorStrategy):
                     )
                     expected_literals.append(token_literal)
 
+        expected_literals = list(map(lambda x: x.lower(), expected_literals))
+
+        for idx, literal in enumerate(expected_literals):
+            if literal == "identificador":
+                expected_literals[idx] = "'{}'".format(literal)
+            if literal == "fid":
+                expected_literals[idx] = "'{}'".format("identificador de funcion")
+            if literal == "tk_num":
+                expected_literals[idx] = "'{}'".format("numero")
+
         expected_literals.sort()
 
         message = (
-            "<{},{}> Error sintactico: se encontro: '{}'; se esperaba: {}.".format(
-                token.line,
-                token.column + 1,
-                token.text,
-                ",".join(expected_literals),
+            "<{}:{}> Error sintactico: se encontro: '{}'; se esperaba: {}.".format(
+                token.line, token.column + 1, token.text, ", ".join(expected_literals)
             )
         )
+
+        if token.text == "<EOF>":
+            message = "<{}:{}> Error sintactico: se encontro final de archivo; se esperaba 'end'.".format(
+                token.line, token.column + 1
+            )
 
         return message
 
